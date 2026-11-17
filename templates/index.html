@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244b4a">
+  <title>Бүртгэл | Хувийн мэдээлэл</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <div class="brand-mark" aria-hidden="true">Б</div>
+      <span>Бүртгэлийн төв</span>
+    </header>
+
+    <section class="registration-card" aria-labelledby="page-title">
+      <div class="intro">
+        <p class="eyebrow">ХУВИЙН МЭДЭЭЛЭЛ</p>
+        <h1 id="page-title">Бүртгүүлэх</h1>
+        <p class="subtitle">Мэдээллээ бөглөж бүртгэлээ үүсгэнэ үү.</p>
+      </div>
+
+      {% if message %}
+      <div class="notice {{ message_type }}" role="alert">{{ message }}</div>
+      {% endif %}
+
+      <form method="post" action="{{ url_for('register') }}">
+        <div class="field-row">
+          <label class="field">
+            <span>Овог</span>
+            <input name="surname" type="text" autocomplete="family-name"
+                   placeholder="Овгоо оруулна уу" maxlength="100" required
+                   value="{{ form.surname }}">
+          </label>
+          <label class="field">
+            <span>Нэр</span>
+            <input name="given_name" type="text" autocomplete="given-name"
+                   placeholder="Нэрээ оруулна уу" maxlength="100" required
+                   value="{{ form.given_name }}">
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Утасны дугаар</span>
+          <input name="phone" type="tel" autocomplete="tel" inputmode="tel"
+                 placeholder="9911 2233" maxlength="20" required
+                 aria-describedby="phone-hint" value="{{ form.phone }}">
+          <small id="phone-hint">Монгол дугаарын 8 оронг оруулна уу.</small>
+        </label>
+
+        <label class="field">
+          <span>Имэйл хаяг</span>
+          <input name="email" type="email" autocomplete="email"
+                 placeholder="ner@example.com" maxlength="254" required
+                 aria-describedby="email-hint" value="{{ form.email }}">
+          <small id="email-hint">Форматын жишээ: <strong>ner@example.com</strong></small>
+        </label>
+
+        <button type="submit">Бүртгүүлэх <span aria-hidden="true">→</span></button>
+      </form>
+
+      <p class="privacy-note"><span aria-hidden="true">◈</span> Таны мэдээллийг зөвхөн бүртгэлийн зорилгоор ашиглана.</p>
+    </section>
+
+    <footer>Мэдээллээ үнэн зөв бөглөнө үү. · <a class="text-link" href="{{ url_for('admin_login') }}">Админ</a></footer>
+  </main>
+</body>
+</html>

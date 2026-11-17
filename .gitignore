@@ -1,0 +1,17 @@
+# Нууц тохиргоо
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+
+# Хувийн мэдээлэл агуулсан өгөгдөл
+Register.db
+Register.xlsx
+
+# macOS
+.DS_Store

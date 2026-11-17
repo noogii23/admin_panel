@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244b4a">
+  <title>Админ нэвтрэх | Бүртгэл</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <a class="brand-mark" href="{{ url_for('register') }}" aria-label="Бүртгэлийн нүүр">Б</a>
+      <span>Бүртгэлийн төв</span>
+    </header>
+
+    <section class="registration-card" aria-labelledby="page-title">
+      <div class="intro">
+        <p class="eyebrow">АДМИН ХЭСЭГ</p>
+        <h1 id="page-title">Нэвтрэх</h1>
+        <p class="subtitle">Бүртгэлийн мэдээллийг харахын тулд нууц үгээ оруулна уу.</p>
+      </div>
+
+      {% if message %}
+      <div class="notice error" role="alert">{{ message }}</div>
+      {% endif %}
+
+      <form method="post" action="{{ url_for('admin_login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label class="field">
+          <span>Админы нууц үг</span>
+          <input name="password" type="password" autocomplete="current-password"
+                 required autofocus>
+        </label>
+        <button type="submit">Нэвтрэх <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <footer><a class="text-link" href="{{ url_for('register') }}">← Бүртгэлийн нүүр рүү буцах</a></footer>
+  </main>
+</body>
+</html>

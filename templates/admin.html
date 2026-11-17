@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244b4a">
+  <title>Бүртгэгдсэн мэдээлэл | Админ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="admin-page">
+    <header class="admin-header">
+      <a class="brand admin-brand" href="{{ url_for('register') }}">
+        <span class="brand-mark" aria-hidden="true">Б</span>
+        <span>Бүртгэлийн төв</span>
+      </a>
+      <form method="post" action="{{ url_for('admin_logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="secondary-button" type="submit">Гарах</button>
+      </form>
+    </header>
+
+    <section class="admin-heading">
+      <div>
+        <p class="eyebrow">АДМИН ХЭСЭГ</p>
+        <h1>Бүртгэгдсэн мэдээлэл</h1>
+        <p class="subtitle">Нийт {{ registrations|length }} бүртгэл</p>
+      </div>
+      <a class="download-button" href="{{ url_for('export_excel') }}">
+        Excel татах <span aria-hidden="true">↓</span>
+      </a>
+    </section>
+
+    <section class="table-card" aria-label="Бүртгэлийн жагсаалт">
+      {% if registrations %}
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Огноо</th>
+              <th>Овог</th>
+              <th>Нэр</th>
+              <th>Утасны дугаар</th>
+              <th>Имэйл</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for registration in registrations %}
+            <tr>
+              <td>{{ registration.created_at }}</td>
+              <td>{{ registration.surname }}</td>
+              <td>{{ registration.given_name }}</td>
+              <td>{{ registration.phone }}</td>
+              <td>{{ registration.email }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <span class="empty-icon" aria-hidden="true">—</span>
+        <h2>Одоогоор бүртгэл алга</h2>
+        <p>Шинэ бүртгэл хийгдэхэд энд харагдана.</p>
+      </div>
+      {% endif %}
+    </section>
+
+    <footer>Хувийн мэдээлэл — зөвхөн эрх бүхий админд харагдана.</footer>
+  </main>
+</body>
+</html>
