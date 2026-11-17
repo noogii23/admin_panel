@@ -19,13 +19,17 @@ from flask import (
     session,
     url_for,
 )
+from dotenv import load_dotenv
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, PatternFill
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=os.environ.get("SECRET_KEY") or secrets.token_hex(32),
-    DATABASE=str(Path(__file__).resolve().parent / "Register.db"),
+    DATABASE=os.environ.get("DATABASE_PATH")
+    or str(Path(__file__).resolve().parent / "Register.db"),
     ADMIN_PASSWORD=os.environ.get("ADMIN_PASSWORD"),
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",

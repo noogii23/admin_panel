@@ -13,16 +13,18 @@
    python3 -m pip install -r requirements.txt
    ```
 
-4. Админы нууц үг болон Flask session-ийн нууцыг тохируулна. Нууц үгт өөрийн сонгосон
-   утгыг ашиглаж, кодонд шууд хадгалахгүй:
+4. Төслийн хавтаст `.env` файл үүсгээд админы нууц үг болон Flask session-ийн нууцыг
+   бичнэ. Апп эхлэхдээ энэ файлыг автоматаар уншина. `.env` нь `.gitignore`-д орсон тул
+   GitHub руу явахгүй:
 
    ```bash
-   export ADMIN_PASSWORD='өөрийн-урт-админы-нууц-үг'
-   export SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')"
+   ADMIN_PASSWORD='өөрийн-урт-админы-нууц-үг'
+   SECRET_KEY=<python3 -c 'import secrets; print(secrets.token_hex(32))' командын гаралт>
    ```
 
    `SECRET_KEY`-г дахин эхлүүлэх бүрдээ сольж болохгүй. Нууц үг болон түлхүүрийг
    бусдад дамжуулахгүй. Тохируулаагүй бол админ хэсэгт нэвтрэх боломжгүй.
+   Өгөгдлийн сангийн байршлыг `DATABASE_PATH` хувьсагчаар өөрчилж болно.
 
 5. Вебийг ажиллуулна:
 
@@ -38,3 +40,13 @@
 зогсоогоод уг файлыг хуулна. Хэрэв өмнөх `Register.xlsx` байвал эхний ажиллуулах үед
 бүртгэлүүдийг SQLite рүү нэг удаа импортолж, эх файлыг өөрчлөхгүй үлдээнэ. Цаашдын
 бүртгэл SQLite-д хадгалагдана. Бодит серверт HTTPS ашиглаж, debug горимыг идэвхжүүлэхгүй байна.
+
+## Render дээр байршуулах
+
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `gunicorn app:app`
+- **Environment Variables:** `ADMIN_PASSWORD`, `SECRET_KEY`-г Render-ийн Environment
+  хэсэгт оруулна (`.env` GitHub руу явдаггүй).
+- Render-ийн файлын систем түр зуурынх тул deploy болгонд `Register.db` устана.
+  Өгөгдлийг хадгалахын тулд Persistent Disk (жишээ нь `/var/data`) холбоод
+  `DATABASE_PATH=/var/data/Register.db` гэж тохируулна.
